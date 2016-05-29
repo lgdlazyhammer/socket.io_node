@@ -1,0 +1,34 @@
+<h1>socket client test</h1>
+<hr/>
+
+<button onclick="sendDataToWSServer()">send</button>
+
+<div id="server-time"></div>
+
+
+<script src="public/socket.io.js"></script>
+<script>
+  var socket = io('http://localhost:8017');
+  var serverTime = document.getElementById('server-time');
+  socket.on('news', function (data) {
+    console.log(data);
+    socket.emit('my other event', { my: 'data' });
+  });
+  
+  socket.on('respond', function (data) {
+    console.log(data);
+  });
+  
+  socket.on('server time', function (data) {
+	serverTime.innerText = data.time;
+  });
+  
+  
+  function sendDataToWSServer(){
+	socket.emit('say hello', { word: 'hello' });
+  }
+  
+</script>
+
+
+
